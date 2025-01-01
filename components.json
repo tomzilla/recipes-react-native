@@ -1,0 +1,6 @@
+{
+  "aliases": {
+    "components": "vendor/components",
+    "lib": "vendor/lib"
+  }
+}

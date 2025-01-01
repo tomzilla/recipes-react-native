@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-brand: #D64D57;      /* Rich raspberry red */
+  --color-secondary: #FF9566;  /* Warm coral */
+  
+  /* Neutral Colors */
+  --color-text-dark: #2D3034;  /* Soft black */
+  --color-text-light: #F5F5F5; /* Off-white */
+  --color-background: #FFFFFF;  /* Clean white */
+  
+  /* Accent Colors */
+  --color-sage: #7FB685;       /* Fresh green */
+  --color-butter: #FFE5AD;     /* Warm yellow */
+  --color-wine: #933F4C;       /* Deep wine */
+  
+  /* Supporting Colors */
+  --color-cream: #FFF8F0;      /* Light cream */
+  --color-grey: #E8E9EB;       /* Soft grey */
+}
+
+/* Text Styles */
+.text-primary {
+  color: var(--color-text-dark);
+}
+
+.text-light {
+  color: var(--color-text-light);
+}
+
+/* Background Utilities */
+.bg-main {
+  background-color: var(--color-background);
+}
+
+.bg-cream {
+  background-color: var(--color-cream);
+}
+
+.bg-accent {
+  background-color: var(--color-brand);
+}
+
+/* Interactive Elements */
+.btn-primary {
+  background-color: var(--color-brand);
+  color: var(--color-text-light);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-text-light);
+}
+
+/* Category Tags */
+.tag-healthy {
+  background-color: var(--color-sage);
+  color: var(--color-text-light);
+}
+
+.tag-favorite {
+  background-color: var(--color-butter);
+  color: var(--color-text-dark);
+}
+
+.tag-wine {
+  background-color: var(--color-wine);
+  color: var(--color-text-light);
+}
+
+/* Utility Classes */
+.border-subtle {
+  border-color: var(--color-grey);
+}
+
+.hover-state:hover {
+  background-color: var(--color-cream);
+}
+
+/* State Classes */
+.inactive {
+  color: var(--color-grey);
+}
+
+.highlighted {
+  background-color: var(--color-butter);
+}
+
+/* Content Sections */
+.recipe-card {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-grey);
+}
+
+.premium-content {
+  background-color: var(--color-wine);
+  color: var(--color-text-light);
+}
+
+.category-section {
+  background-color: var(--color-cream);
+}
