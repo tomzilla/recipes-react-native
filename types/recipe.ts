@@ -14,13 +14,12 @@ export interface Step {
   id: string;
   inputs: Ingredient[];
   action: {
-    type: string;
+    name: string;
     duration: string;
     temperature: string;
     description: string;
   };
   output: {
-    type: string;
     name: string;
     description: string;
     successIndicators: string[];

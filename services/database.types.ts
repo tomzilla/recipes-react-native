@@ -24,6 +24,80 @@ export type Database = {
         }
         Relationships: []
       }
+      meal_plan: {
+        Row: {
+          created_at: string | null
+          meal_type: string | null
+          plan_date: string
+          recipe_id: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          meal_type?: string | null
+          plan_date: string
+          recipe_id: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          meal_type?: string | null
+          plan_date?: string
+          recipe_id?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_meal_plan_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipe_tags: {
+        Row: {
+          created_at: string | null
+          id: number
+          recipe_id: number
+          tag_id: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          recipe_id: number
+          tag_id: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          recipe_id?: number
+          tag_id?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_recipe_tags_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_recipe_tags_tag"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       recipes: {
         Row: {
           created_at: string
@@ -79,6 +153,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      tags: {
+        Row: {
+          created_at: string | null
+          id: number
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          name?: string
+        }
+        Relationships: []
       }
       user_profiles: {
         Row: {

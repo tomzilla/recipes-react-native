@@ -44,7 +44,7 @@ const StepCard = ({ step }: {step: Step}) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Action</Text>
         <View style={styles.actionContainer}>
-          <Text style={styles.actionText}>{step.action.description}</Text>
+          <Text style={styles.actionText}>{step.action.name}</Text>
           {step.action.duration && (
             <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text>
           )}
@@ -58,7 +58,7 @@ const StepCard = ({ step }: {step: Step}) => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Expected Result</Text>
         <View style={styles.outputContainer}>
-          <Text style={styles.outputText}>{step.output.description}</Text>
+          <Text style={styles.outputText}>{step.output.name}</Text>
           {step.output.successIndicators && (
             <View style={styles.indicatorsContainer}>
               <Text style={styles.indicatorsTitle}>Success Indicators:</Text>

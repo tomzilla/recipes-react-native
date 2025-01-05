@@ -4,7 +4,8 @@ import { Stack } from "expo-router";
 function TabLayout() {
   return (
     <Stack>
-      <Stack.Screen name="index" />
+      <Stack.Screen name="index"
+      />
       <Stack.Screen name="[recipe]"
         options={{
           headerLeft: () => <BackButton />,

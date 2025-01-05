@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
 import { ChefHat, Crown, Sparkles } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
-import { CurratedRecipes } from './CurratedRecipes.tsx';
-import { SavedRecipes, SavedRecipesType } from './SavedRecipes.tsx';
+import { SavedRecipes } from './SavedRecipes.tsx';
 import { GenerateButton } from './GenerateButton.tsx';
 import { supabase } from '@/services/SupabaseClient.ts';
 import { Button } from '@/vendor/components/ui/button.tsx';
 import { Card, CardContent } from '@/vendor/components/ui/card.tsx';
 import { Tables } from '@/services/database.types.ts';
 import { Text } from '@rneui/themed';
-import { View } from 'react-native';
+import { SavedRecipesType } from './ViewSavedRecipeButton.tsx';
+import TagsFilter from './TagsFilter.tsx';
+import { useTags } from '@/hooks/useTags.ts';
 
 interface LoggedInProps {
   user: User | null,
@@ -20,7 +21,10 @@ export function LoggedIn({ user, userProfile }: LoggedInProps) {
     return null;
   }
   const [savedRecipes, setSavedRecipes] = useState<SavedRecipesType[]>([]);
-
+  const [filteredRecipes, setFilteredRecipes] = useState<SavedRecipesType[]>([]);
+  const {
+    selectedTags,
+  } = useTags();
   const [isPremium, setIsPremium] = useState(true);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
@@ -41,9 +45,12 @@ export function LoggedIn({ user, userProfile }: LoggedInProps) {
 
       const supabaseQuery = supabase.from('saved_recipes').select(`
             recipe:recipes!inner(
-                id,
-                title,
-                url
+              id,
+              title,
+              url,
+              recipe_tags!left(
+                tag_id
+              )
             ),
             user_id,
             state,
@@ -59,6 +66,19 @@ export function LoggedIn({ user, userProfile }: LoggedInProps) {
       }
     })();
   }, [refresh, user]);
+
+  useEffect(() => {
+    console.log("Selected tags changed: ", selectedTags);
+      if (selectedTags.length == 0) {
+        setFilteredRecipes(savedRecipes);
+        return;
+      } else {
+        const filtered = savedRecipes.filter(recipe => {
+          return recipe.recipe.recipe_tags.some(tag => selectedTags.includes(tag.tag_id));
+        });
+        setFilteredRecipes(filtered);
+      }
+  }, [selectedTags, savedRecipes]);
 
   return (
     <div className="p-4 bg-white">
@@ -119,13 +139,15 @@ export function LoggedIn({ user, userProfile }: LoggedInProps) {
           </CardContent>
         </Card>
       )}
-
+      <TagsFilter
+        onSelectionChange={(tags) => { }}
+      />
       {/* Saved Recipes */}
       {isPremium
-        && (<SavedRecipes savedRecipes={savedRecipes} />)}
+        && (<SavedRecipes savedRecipes={filteredRecipes} />)}
 
       {/* Curated Recipes */}
-      <CurratedRecipes />
+      {/* <CurratedRecipes /> */}
 
       {/* Premium Info */}
       {!isPremium && (
