@@ -25,16 +25,10 @@ function TabLayout() {
     <Stack.Screen 
       name="index"
       options={{
-        headerTitle: "My Recipes",
+        headerTitle: "Meal Plan",
         headerLargeTitle: true, // iOS large title
         headerLargeTitleStyle: {
           color: theme.light.textPrimary,
-        },
-        headerSearchBarOptions: {
-          placeholder: "Search recipes...",
-          headerIconColor: theme.light.secondary,
-          textColor: theme.light.textPrimary,
-          hintTextColor: theme.light.textSecondary,
         },
       }}
     />
@@ -46,15 +40,6 @@ function TabLayout() {
         headerTitle: "",
         // headerTransparent: true,
         headerBlurEffect: "light",
-      }}
-    />
-
-    <Stack.Screen 
-      name="add_url"
-      options={{
-        headerTitle: "Add Recipe",
-        presentation: 'modal',
-        headerLeft: () => <BackButton />,
       }}
     />
   </Stack>

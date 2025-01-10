@@ -1,8 +1,9 @@
-import { Tables } from "@/services/database.types";
+import { Pressable, Text } from "react-native";
+import { SavedRecipesType } from "@/types/saved_recipes";
+import { useColorScheme } from "react-native";
+import { theme } from "@/constants/Colors";
+import { StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { Card } from '@rneui/themed';
-import { ArrowRight } from "lucide-react"
-import { TouchableOpacity } from "react-native";
 function getDomain(url: string) {
   const u = URL.parse(url);
   if (!u) {
@@ -11,39 +12,38 @@ function getDomain(url: string) {
   return `${u?.protocol}//${u.host}`;
 }
 
-interface TaggedRecipe extends Tables<'recipes'> {
-  recipe_tags: {
-    tag_id: number
-  }[]
-}
-
-export interface SavedRecipesType {
-  recipe: TaggedRecipe
-  user_id: string
-  state: string
-  created_at: any
-}
-
 interface ViewSavedRecipeButtonProps {
   recipe: SavedRecipesType
 }
+
 export function ViewSavedRecipeButton({ recipe }: ViewSavedRecipeButtonProps) {
+  const colorScheme = useColorScheme();
+  const colors = theme[colorScheme === 'dark' ? 'dark' : 'light'];
+
+  const styles = StyleSheet.create({
+    button: {
+      backgroundColor: colors.surface,
+      borderRadius: 8,
+      padding: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    buttonText: {
+      color: colors.textPrimary,
+      fontSize: 14,
+      fontWeight: '500',
+    }
+  });
+
   return (
-    <TouchableOpacity onPress={() => {
-      router.push(`/home/recipes/${recipe.recipe.id}`);
-    }}>
-      <Card key={recipe.recipe.id}>
-        <div className="flex">
-          <div className="grow">
-            <p className="text-sm font-medium">{recipe.recipe.title}</p>
-            <p className="text-xs text-gray-500">{getDomain(recipe.recipe.url)}</p>
-            <p className="text-xs text-gray-500">{recipe.recipe.created_at && new Date(recipe.recipe.created_at).toDateString()}</p>
-          </div>
-          <div className='row-0 flex items-center' >
-            <ArrowRight size={14} className="ml-1" />
-          </div>
-        </div>
-      </Card>
-    </TouchableOpacity>
+    <Pressable style={styles.button}
+      onPress={() => {
+        router.push(`/home/recipes/${recipe.recipe.id}`);
+      }}
+    >
+      <Text style={styles.buttonText}>{recipe.recipe.title}</Text>
+      <Text className="text-xs text-gray-500">{getDomain(recipe.recipe.url)}</Text>
+      <Text className="text-xs text-gray-500">{recipe.recipe.created_at && new Date(recipe.recipe.created_at).toDateString()}</Text>
+    </Pressable>
   );
 }

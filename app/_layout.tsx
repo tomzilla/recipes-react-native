@@ -6,10 +6,19 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import "../global.css";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
+import environment from '@/services/RelayEnvironment';
+import reactRelay from 'react-relay';
+
+export const RelayEnvironmentProvider =
+  reactRelay.RelayEnvironmentProvider as unknown as (props: {
+    children: React.ReactNode;
+    environment: typeof environment;
+  }) => React.ReactElement;
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -32,12 +41,16 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
+      <RelayEnvironmentProvider environment={environment}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="index" />
+            </Stack>
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </RelayEnvironmentProvider>
     </Provider>
   );
 }

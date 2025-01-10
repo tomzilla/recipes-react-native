@@ -9,6 +9,29 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      curated_recipes: {
+        Row: {
+          id: number
+          recipe_id: number
+        }
+        Insert: {
+          id?: number
+          recipe_id: number
+        }
+        Update: {
+          id?: number
+          recipe_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_curated_recipes_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       debug_log: {
         Row: {
           id: number
@@ -27,6 +50,7 @@ export type Database = {
       meal_plan: {
         Row: {
           created_at: string | null
+          id: number
           meal_type: string | null
           plan_date: string
           recipe_id: number
@@ -35,6 +59,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          id?: number
           meal_type?: string | null
           plan_date: string
           recipe_id: number
@@ -43,6 +68,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          id?: number
           meal_type?: string | null
           plan_date?: string
           recipe_id?: number
@@ -102,6 +128,7 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          image_url: string | null
           json: Json | null
           mermaid: string | null
           title: string | null
@@ -110,6 +137,7 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: number
+          image_url?: string | null
           json?: Json | null
           mermaid?: string | null
           title?: string | null
@@ -118,6 +146,7 @@ export type Database = {
         Update: {
           created_at?: string
           id?: number
+          image_url?: string | null
           json?: Json | null
           mermaid?: string | null
           title?: string | null
@@ -172,6 +201,29 @@ export type Database = {
         }
         Relationships: []
       }
+      trending_recipes: {
+        Row: {
+          id: number
+          recipe_id: number
+        }
+        Insert: {
+          id?: number
+          recipe_id: number
+        }
+        Update: {
+          id?: number
+          recipe_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_trending_recipes_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_profiles: {
         Row: {
           created_at: string
@@ -192,7 +244,24 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      future_meal_plan_count: {
+        Row: {
+          count: number | null
+        }
+        Relationships: []
+      }
+      meal_plan_count: {
+        Row: {
+          count: number | null
+        }
+        Relationships: []
+      }
+      saved_recipes_count: {
+        Row: {
+          count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

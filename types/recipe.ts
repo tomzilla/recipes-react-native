@@ -13,6 +13,7 @@ export interface IntermediateState extends Ingredient {
 export interface Step {
   id: string;
   inputs: Ingredient[];
+  detailed: string;
   action: {
     name: string;
     duration: string;
@@ -37,4 +38,12 @@ export interface Recipe {
   json: RecipeJson;
   created_at: string;
   url: string;
+  image_url?: string;
+}
+
+export interface CuratedRecipesState {
+  trending: Recipe[];
+  curated: Recipe[];
+  loading: boolean;
+  error: string | null;
 }

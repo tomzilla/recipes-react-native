@@ -1,0 +1,1238 @@
+"""A high precision floating point value represented as a string"""
+scalar BigFloat
+
+"""
+Boolean expression comparing fields on type "BigFloat"
+"""
+input BigFloatFilter {
+  eq: BigFloat
+  gt: BigFloat
+  gte: BigFloat
+  in: [BigFloat!]
+  is: FilterIs
+  lt: BigFloat
+  lte: BigFloat
+  neq: BigFloat
+}
+
+"""
+Boolean expression comparing fields on type "BigFloatList"
+"""
+input BigFloatListFilter {
+  containedBy: [BigFloat!]
+  contains: [BigFloat!]
+  eq: [BigFloat!]
+  is: FilterIs
+  overlaps: [BigFloat!]
+}
+
+"""An arbitrary size integer represented as a string"""
+scalar BigInt
+
+"""
+Boolean expression comparing fields on type "BigInt"
+"""
+input BigIntFilter {
+  eq: BigInt
+  gt: BigInt
+  gte: BigInt
+  in: [BigInt!]
+  is: FilterIs
+  lt: BigInt
+  lte: BigInt
+  neq: BigInt
+}
+
+"""
+Boolean expression comparing fields on type "BigIntList"
+"""
+input BigIntListFilter {
+  containedBy: [BigInt!]
+  contains: [BigInt!]
+  eq: [BigInt!]
+  is: FilterIs
+  overlaps: [BigInt!]
+}
+
+"""
+Boolean expression comparing fields on type "Boolean"
+"""
+input BooleanFilter {
+  eq: Boolean
+  is: FilterIs
+}
+
+"""
+Boolean expression comparing fields on type "BooleanList"
+"""
+input BooleanListFilter {
+  containedBy: [Boolean!]
+  contains: [Boolean!]
+  eq: [Boolean!]
+  is: FilterIs
+  overlaps: [Boolean!]
+}
+
+"""
+An opaque string using for tracking a position in results during pagination
+"""
+scalar Cursor
+
+"""A date without time information"""
+scalar Date
+
+"""
+Boolean expression comparing fields on type "Date"
+"""
+input DateFilter {
+  eq: Date
+  gt: Date
+  gte: Date
+  in: [Date!]
+  is: FilterIs
+  lt: Date
+  lte: Date
+  neq: Date
+}
+
+"""
+Boolean expression comparing fields on type "DateList"
+"""
+input DateListFilter {
+  containedBy: [Date!]
+  contains: [Date!]
+  eq: [Date!]
+  is: FilterIs
+  overlaps: [Date!]
+}
+
+"""A date and time"""
+scalar Datetime
+
+"""
+Boolean expression comparing fields on type "Datetime"
+"""
+input DatetimeFilter {
+  eq: Datetime
+  gt: Datetime
+  gte: Datetime
+  in: [Datetime!]
+  is: FilterIs
+  lt: Datetime
+  lte: Datetime
+  neq: Datetime
+}
+
+"""
+Boolean expression comparing fields on type "DatetimeList"
+"""
+input DatetimeListFilter {
+  containedBy: [Datetime!]
+  contains: [Datetime!]
+  eq: [Datetime!]
+  is: FilterIs
+  overlaps: [Datetime!]
+}
+
+enum FilterIs {
+  NULL
+  NOT_NULL
+}
+
+"""
+Boolean expression comparing fields on type "Float"
+"""
+input FloatFilter {
+  eq: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  is: FilterIs
+  lt: Float
+  lte: Float
+  neq: Float
+}
+
+"""
+Boolean expression comparing fields on type "FloatList"
+"""
+input FloatListFilter {
+  containedBy: [Float!]
+  contains: [Float!]
+  eq: [Float!]
+  is: FilterIs
+  overlaps: [Float!]
+}
+
+"""
+Boolean expression comparing fields on type "ID"
+"""
+input IDFilter {
+  eq: ID
+}
+
+"""
+Boolean expression comparing fields on type "Int"
+"""
+input IntFilter {
+  eq: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  is: FilterIs
+  lt: Int
+  lte: Int
+  neq: Int
+}
+
+"""
+Boolean expression comparing fields on type "IntList"
+"""
+input IntListFilter {
+  containedBy: [Int!]
+  contains: [Int!]
+  eq: [Int!]
+  is: FilterIs
+  overlaps: [Int!]
+}
+
+"""A Javascript Object Notation value serialized as a string"""
+scalar JSON
+
+"""The root type for creating and mutating data"""
+type Mutation {
+  """Deletes zero or more records from the `debug_log` collection"""
+  deleteFromdebug_logCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: debug_logFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): debug_logDeleteResponse!
+
+  """Deletes zero or more records from the `recipe_tags` collection"""
+  deleteFromrecipe_tagsCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: recipe_tagsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): recipe_tagsDeleteResponse!
+
+  """Deletes zero or more records from the `recipes` collection"""
+  deleteFromrecipesCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: recipesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): recipesDeleteResponse!
+
+  """Deletes zero or more records from the `saved_recipes` collection"""
+  deleteFromsaved_recipesCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: saved_recipesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): saved_recipesDeleteResponse!
+
+  """Deletes zero or more records from the `tags` collection"""
+  deleteFromtagsCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: tagsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): tagsDeleteResponse!
+
+  """Deletes zero or more records from the `user_profiles` collection"""
+  deleteFromuser_profilesCollection(
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: user_profilesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): user_profilesDeleteResponse!
+
+  """Adds one or more `debug_log` records to the collection"""
+  insertIntodebug_logCollection(objects: [debug_logInsertInput!]!): debug_logInsertResponse
+
+  """Adds one or more `recipe_tags` records to the collection"""
+  insertIntorecipe_tagsCollection(objects: [recipe_tagsInsertInput!]!): recipe_tagsInsertResponse
+
+  """Adds one or more `recipes` records to the collection"""
+  insertIntorecipesCollection(objects: [recipesInsertInput!]!): recipesInsertResponse
+
+  """Adds one or more `saved_recipes` records to the collection"""
+  insertIntosaved_recipesCollection(objects: [saved_recipesInsertInput!]!): saved_recipesInsertResponse
+
+  """Adds one or more `tags` records to the collection"""
+  insertIntotagsCollection(objects: [tagsInsertInput!]!): tagsInsertResponse
+
+  """Adds one or more `user_profiles` records to the collection"""
+  insertIntouser_profilesCollection(objects: [user_profilesInsertInput!]!): user_profilesInsertResponse
+
+  """Updates zero or more records in the `debug_log` collection"""
+  updatedebug_logCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: debug_logUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: debug_logFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): debug_logUpdateResponse!
+
+  """Updates zero or more records in the `recipe_tags` collection"""
+  updaterecipe_tagsCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: recipe_tagsUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: recipe_tagsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): recipe_tagsUpdateResponse!
+
+  """Updates zero or more records in the `recipes` collection"""
+  updaterecipesCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: recipesUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: recipesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): recipesUpdateResponse!
+
+  """Updates zero or more records in the `saved_recipes` collection"""
+  updatesaved_recipesCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: saved_recipesUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: saved_recipesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): saved_recipesUpdateResponse!
+
+  """Updates zero or more records in the `tags` collection"""
+  updatetagsCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: tagsUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: tagsFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): tagsUpdateResponse!
+
+  """Updates zero or more records in the `user_profiles` collection"""
+  updateuser_profilesCollection(
+    """
+    Fields that are set will be updated for all records matching the `filter`
+    """
+    set: user_profilesUpdateInput!
+
+    """Restricts the mutation's impact to records matching the criteria"""
+    filter: user_profilesFilter
+
+    """
+    The maximum number of records in the collection permitted to be affected
+    """
+    atMost: Int! = 1
+  ): user_profilesUpdateResponse!
+}
+
+interface Node {
+  """Retrieves a record by `ID`"""
+  nodeId: ID!
+}
+
+"""Any type not handled by the type system"""
+scalar Opaque
+
+"""
+Boolean expression comparing fields on type "Opaque"
+"""
+input OpaqueFilter {
+  eq: Opaque
+  is: FilterIs
+}
+
+"""Defines a per-field sorting order"""
+enum OrderByDirection {
+  """Ascending order, nulls first"""
+  AscNullsFirst
+
+  """Ascending order, nulls last"""
+  AscNullsLast
+
+  """Descending order, nulls first"""
+  DescNullsFirst
+
+  """Descending order, nulls last"""
+  DescNullsLast
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+"""The root type for querying data"""
+type Query {
+  """A pagable collection of type `debug_log`"""
+  debug_logCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: debug_logFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [debug_logOrderBy!]
+  ): debug_logConnection
+
+  """Retrieve a record by its `ID`"""
+  node(
+    """The record's `ID`"""
+    nodeId: ID!
+  ): Node
+
+  """A pagable collection of type `recipe_tags`"""
+  recipe_tagsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: recipe_tagsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [recipe_tagsOrderBy!]
+  ): recipe_tagsConnection
+
+  """A pagable collection of type `recipes`"""
+  recipesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: recipesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [recipesOrderBy!]
+  ): recipesConnection
+
+  """A pagable collection of type `saved_recipes`"""
+  saved_recipesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: saved_recipesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [saved_recipesOrderBy!]
+  ): saved_recipesConnection
+
+  """A pagable collection of type `tags`"""
+  tagsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: tagsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [tagsOrderBy!]
+  ): tagsConnection
+
+  """A pagable collection of type `user_profiles`"""
+  user_profilesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: user_profilesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [user_profilesOrderBy!]
+  ): user_profilesConnection
+}
+
+"""
+Boolean expression comparing fields on type "String"
+"""
+input StringFilter {
+  eq: String
+  gt: String
+  gte: String
+  ilike: String
+  in: [String!]
+  iregex: String
+  is: FilterIs
+  like: String
+  lt: String
+  lte: String
+  neq: String
+  regex: String
+  startsWith: String
+}
+
+"""
+Boolean expression comparing fields on type "StringList"
+"""
+input StringListFilter {
+  containedBy: [String!]
+  contains: [String!]
+  eq: [String!]
+  is: FilterIs
+  overlaps: [String!]
+}
+
+"""A time without date information"""
+scalar Time
+
+"""
+Boolean expression comparing fields on type "Time"
+"""
+input TimeFilter {
+  eq: Time
+  gt: Time
+  gte: Time
+  in: [Time!]
+  is: FilterIs
+  lt: Time
+  lte: Time
+  neq: Time
+}
+
+"""
+Boolean expression comparing fields on type "TimeList"
+"""
+input TimeListFilter {
+  containedBy: [Time!]
+  contains: [Time!]
+  eq: [Time!]
+  is: FilterIs
+  overlaps: [Time!]
+}
+
+"""A universally unique identifier"""
+scalar UUID
+
+"""
+Boolean expression comparing fields on type "UUID"
+"""
+input UUIDFilter {
+  eq: UUID
+  in: [UUID!]
+  is: FilterIs
+  neq: UUID
+}
+
+"""
+Boolean expression comparing fields on type "UUIDList"
+"""
+input UUIDListFilter {
+  containedBy: [UUID!]
+  contains: [UUID!]
+  eq: [UUID!]
+  is: FilterIs
+  overlaps: [UUID!]
+}
+
+type debug_log implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: BigInt!
+  message: String!
+}
+
+type debug_logConnection {
+  edges: [debug_logEdge!]!
+  pageInfo: PageInfo!
+}
+
+type debug_logDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [debug_log!]!
+}
+
+type debug_logEdge {
+  cursor: String!
+  node: debug_log!
+}
+
+input debug_logFilter {
+  id: BigIntFilter
+  message: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [debug_logFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [debug_logFilter!]
+
+  """Negates a filter"""
+  not: debug_logFilter
+}
+
+input debug_logInsertInput {
+  message: String
+}
+
+type debug_logInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [debug_log!]!
+}
+
+input debug_logOrderBy {
+  id: OrderByDirection
+  message: OrderByDirection
+}
+
+input debug_logUpdateInput {
+  message: String
+}
+
+type debug_logUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [debug_log!]!
+}
+
+type recipe_tags implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: Int!
+  recipe_id: Int!
+  tag_id: Int!
+  user_id: UUID
+  created_at: Datetime
+  recipes: recipes
+  tags: tags!
+}
+
+type recipe_tagsConnection {
+  edges: [recipe_tagsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type recipe_tagsDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipe_tags!]!
+}
+
+type recipe_tagsEdge {
+  cursor: String!
+  node: recipe_tags!
+}
+
+input recipe_tagsFilter {
+  id: IntFilter
+  recipe_id: IntFilter
+  tag_id: IntFilter
+  user_id: UUIDFilter
+  created_at: DatetimeFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [recipe_tagsFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [recipe_tagsFilter!]
+
+  """Negates a filter"""
+  not: recipe_tagsFilter
+}
+
+input recipe_tagsInsertInput {
+  recipe_id: Int
+  tag_id: Int
+  user_id: UUID
+  created_at: Datetime
+}
+
+type recipe_tagsInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipe_tags!]!
+}
+
+input recipe_tagsOrderBy {
+  id: OrderByDirection
+  recipe_id: OrderByDirection
+  tag_id: OrderByDirection
+  user_id: OrderByDirection
+  created_at: OrderByDirection
+}
+
+input recipe_tagsUpdateInput {
+  recipe_id: Int
+  tag_id: Int
+  user_id: UUID
+  created_at: Datetime
+}
+
+type recipe_tagsUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipe_tags!]!
+}
+
+type recipes implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: BigInt!
+  created_at: Datetime!
+  url: String!
+  title: String
+  mermaid: String
+  json: JSON
+  saved_recipesCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: saved_recipesFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [saved_recipesOrderBy!]
+  ): saved_recipesConnection
+  recipe_tagsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: recipe_tagsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [recipe_tagsOrderBy!]
+  ): recipe_tagsConnection
+}
+
+type recipesConnection {
+  edges: [recipesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type recipesDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipes!]!
+}
+
+type recipesEdge {
+  cursor: String!
+  node: recipes!
+}
+
+input recipesFilter {
+  id: BigIntFilter
+  created_at: DatetimeFilter
+  url: StringFilter
+  title: StringFilter
+  mermaid: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [recipesFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [recipesFilter!]
+
+  """Negates a filter"""
+  not: recipesFilter
+}
+
+input recipesInsertInput {
+  created_at: Datetime
+  url: String
+  title: String
+  mermaid: String
+  json: JSON
+}
+
+type recipesInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipes!]!
+}
+
+input recipesOrderBy {
+  id: OrderByDirection
+  created_at: OrderByDirection
+  url: OrderByDirection
+  title: OrderByDirection
+  mermaid: OrderByDirection
+}
+
+input recipesUpdateInput {
+  created_at: Datetime
+  url: String
+  title: String
+  mermaid: String
+  json: JSON
+}
+
+type recipesUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [recipes!]!
+}
+
+type saved_recipes implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  created_at: Datetime!
+  user_id: UUID!
+  recipe_id: BigInt!
+  state: String
+  recipes: recipes
+}
+
+type saved_recipesConnection {
+  edges: [saved_recipesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type saved_recipesDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [saved_recipes!]!
+}
+
+type saved_recipesEdge {
+  cursor: String!
+  node: saved_recipes!
+}
+
+input saved_recipesFilter {
+  created_at: DatetimeFilter
+  user_id: UUIDFilter
+  recipe_id: BigIntFilter
+  state: StringFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [saved_recipesFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [saved_recipesFilter!]
+
+  """Negates a filter"""
+  not: saved_recipesFilter
+}
+
+input saved_recipesInsertInput {
+  created_at: Datetime
+  user_id: UUID
+  recipe_id: BigInt
+  state: String
+}
+
+type saved_recipesInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [saved_recipes!]!
+}
+
+input saved_recipesOrderBy {
+  created_at: OrderByDirection
+  user_id: OrderByDirection
+  recipe_id: OrderByDirection
+  state: OrderByDirection
+}
+
+input saved_recipesUpdateInput {
+  created_at: Datetime
+  user_id: UUID
+  recipe_id: BigInt
+  state: String
+}
+
+type saved_recipesUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [saved_recipes!]!
+}
+
+type tags implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: Int!
+  name: String!
+  created_at: Datetime
+  recipe_tagsCollection(
+    """Query the first `n` records in the collection"""
+    first: Int
+
+    """Query the last `n` records in the collection"""
+    last: Int
+
+    """Query values in the collection before the provided cursor"""
+    before: Cursor
+
+    """Query values in the collection after the provided cursor"""
+    after: Cursor
+
+    """
+    Skip n values from the after cursor. Alternative to cursor pagination. Backward pagination not supported.
+    """
+    offset: Int
+
+    """Filters to apply to the results set when querying from the collection"""
+    filter: recipe_tagsFilter
+
+    """Sort order to apply to the collection"""
+    orderBy: [recipe_tagsOrderBy!]
+  ): recipe_tagsConnection
+}
+
+type tagsConnection {
+  edges: [tagsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type tagsDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [tags!]!
+}
+
+type tagsEdge {
+  cursor: String!
+  node: tags!
+}
+
+input tagsFilter {
+  id: IntFilter
+  name: StringFilter
+  created_at: DatetimeFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [tagsFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [tagsFilter!]
+
+  """Negates a filter"""
+  not: tagsFilter
+}
+
+input tagsInsertInput {
+  name: String
+  created_at: Datetime
+}
+
+type tagsInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [tags!]!
+}
+
+input tagsOrderBy {
+  id: OrderByDirection
+  name: OrderByDirection
+  created_at: OrderByDirection
+}
+
+input tagsUpdateInput {
+  name: String
+  created_at: Datetime
+}
+
+type tagsUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [tags!]!
+}
+
+type user_profiles implements Node {
+  """Globally Unique Record Identifier"""
+  nodeId: ID!
+  id: UUID!
+  plan: String
+  created_at: Datetime!
+}
+
+type user_profilesConnection {
+  edges: [user_profilesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type user_profilesDeleteResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [user_profiles!]!
+}
+
+type user_profilesEdge {
+  cursor: String!
+  node: user_profiles!
+}
+
+input user_profilesFilter {
+  id: UUIDFilter
+  plan: StringFilter
+  created_at: DatetimeFilter
+  nodeId: IDFilter
+
+  """
+  Returns true only if all its inner filters are true, otherwise returns false
+  """
+  and: [user_profilesFilter!]
+
+  """
+  Returns true if at least one of its inner filters is true, otherwise returns false
+  """
+  or: [user_profilesFilter!]
+
+  """Negates a filter"""
+  not: user_profilesFilter
+}
+
+input user_profilesInsertInput {
+  id: UUID
+  plan: String
+  created_at: Datetime
+}
+
+type user_profilesInsertResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [user_profiles!]!
+}
+
+input user_profilesOrderBy {
+  id: OrderByDirection
+  plan: OrderByDirection
+  created_at: OrderByDirection
+}
+
+input user_profilesUpdateInput {
+  id: UUID
+  plan: String
+  created_at: Datetime
+}
+
+type user_profilesUpdateResponse {
+  """Count of the records impacted by the mutation"""
+  affectedCount: Int!
+
+  """Array of records impacted by the mutation"""
+  records: [user_profiles!]!
+}

@@ -12,11 +12,13 @@ export class RecipeHandler<T extends RecipeFetcher> {
     this.fetcher = new f(this.url);
     console.log("RecipeHandler constructor");
   }
-  public async fetchRecipe(): Promise<string> {
-    return this.fetcher.fetchRecipe();
+  public async fetchRecipe(): Promise< {content: string, image_url: string}> {
+    const remoteData = await this.fetcher.fetchRecipe();
+
+    return this.parseData(remoteData);
   }
 
-  parseData(data: string): {url: string, title: string, content: string} {
+  parseData(data: string): {content: string, image_url: string} {
     throw new Error("Not implemented");
   }
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d0c45b033edfef72f27995a333d6d39>>
+ * @generated SignedSource<<c1ea4915f4cba5fa2a837cf868e8a407>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type InsertSavedRecipeMutation$variables = {
   recipeId: string;
   userId: string;
@@ -17,10 +18,7 @@ export type InsertSavedRecipeMutation$data = {
   readonly insertIntosaved_recipesCollection: {
     readonly affectedCount: number;
     readonly records: ReadonlyArray<{
-      readonly created_at: string;
-      readonly recipe_id: string;
-      readonly state: string | null | undefined;
-      readonly user_id: string;
+      readonly " $fragmentSpreads": FragmentRefs<"SavedRecipeFragment">;
     }>;
   } | null | undefined;
 };
@@ -73,7 +71,7 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "state",
+  "name": "affectedCount",
   "storageKey": null
 },
 v4 = {
@@ -87,21 +85,14 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "user_id",
+  "name": "id",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "recipe_id",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "affectedCount",
+  "name": "nodeId",
   "storageKey": null
 };
 return {
@@ -130,14 +121,15 @@ return {
             "name": "records",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SavedRecipeFragment"
+              }
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -170,37 +162,131 @@ return {
             "name": "records",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "nodeId",
+                "name": "user_id",
                 "storageKey": null
-              }
+              },
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "state",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "recipes",
+                "kind": "LinkedField",
+                "name": "recipes",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": null
+                  },
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "json",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "title",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "recipe_tagsConnection",
+                    "kind": "LinkedField",
+                    "name": "recipe_tagsCollection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "recipe_tagsEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "recipe_tags",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "tags",
+                                "kind": "LinkedField",
+                                "name": "tags",
+                                "plural": false,
+                                "selections": [
+                                  (v5/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "name",
+                                    "storageKey": null
+                                  },
+                                  (v6/*: any*/)
+                                ],
+                                "storageKey": null
+                              },
+                              (v6/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v6/*: any*/)
+                ],
+                "storageKey": null
+              },
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "792a2d1f042d41902dbc859a4407604b",
+    "cacheID": "bda4f5a78f45559175d1ec6e98a3233a",
     "id": null,
     "metadata": {},
     "name": "InsertSavedRecipeMutation",
     "operationKind": "mutation",
-    "text": "mutation InsertSavedRecipeMutation(\n  $userId: UUID!\n  $recipeId: BigInt!\n) {\n  insertIntosaved_recipesCollection(objects: [{user_id: $userId, recipe_id: $recipeId, state: \"save\"}]) {\n    records {\n      state\n      created_at\n      user_id\n      recipe_id\n      nodeId\n    }\n    affectedCount\n  }\n}\n"
+    "text": "mutation InsertSavedRecipeMutation(\n  $userId: UUID!\n  $recipeId: BigInt!\n) {\n  insertIntosaved_recipesCollection(objects: [{user_id: $userId, recipe_id: $recipeId, state: \"save\"}]) {\n    records {\n      ...SavedRecipeFragment\n      nodeId\n    }\n    affectedCount\n  }\n}\n\nfragment SavedRecipeFragment on saved_recipes {\n  user_id\n  created_at\n  state\n  recipes {\n    id\n    url\n    created_at\n    json\n    title\n    recipe_tagsCollection {\n      edges {\n        node {\n          tags {\n            id\n            name\n            nodeId\n          }\n          nodeId\n        }\n      }\n    }\n    nodeId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8dd83482b087e2317fcaead380ebf393";
+(node as any).hash = "073b12a77a03d713b9d24782b9b5c993";
 
 export default node;

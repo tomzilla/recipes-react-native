@@ -17,24 +17,17 @@ import {
 import {theme} from '@/constants/Colors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-
-const StepCard = ({ step }: {step: Step}) => {
+const StepCard = ({ step }: { step: Step }) => {
   return (
     <View style={styles.card}>
       {/* Step Title */}
-      <Text style={styles.stepTitle}>
-        {step.id.replace(/_/g, ' ').toUpperCase()}
-      </Text>
-
+      {/* <Text style={styles.stepTitle}>{step.id.replace(/_/g, ' ').toUpperCase()}</Text> */}
       {/* Ingredients & Inputs */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Ingredients & Inputs</Text>
         {step.inputs.map((input, index) => (
           <View key={index} style={styles.ingredient}>
-            <Text style={styles.ingredientName}>
-              {input.name.replace(/_/g, ' ')}
-            </Text>
+            <Text style={styles.ingredientName}>{input.name.replace(/_/g, ' ')}</Text>
             <Text style={styles.ingredientQuantity}>{input.quantity}</Text>
           </View>
         ))}
@@ -45,9 +38,7 @@ const StepCard = ({ step }: {step: Step}) => {
         <Text style={styles.sectionTitle}>Action</Text>
         <View style={styles.actionContainer}>
           <Text style={styles.actionText}>{step.action.name}</Text>
-          {step.action.duration && (
-            <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text>
-          )}
+          {step.action.duration && <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text>}
           {step.action.temperature && (
             <Text style={styles.actionDetail}>Temperature: {step.action.temperature}</Text>
           )}
@@ -69,9 +60,16 @@ const StepCard = ({ step }: {step: Step}) => {
           )}
         </View>
       </View>
+
+      {/* Detailed Field */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Detailed Explanation</Text>
+        <Text style={styles.detailed}>{step.detailed}</Text>
+      </View>
     </View>
   );
 };
+
 
 interface NavigationProps {
   currentStep: number;
@@ -198,9 +196,6 @@ const RecipeComponent = ({recipe}: {recipe: Recipe}) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{recipe.title}</Text>
-        <Text style={styles.stepIndicator}>
-          Step {currentStep + 1} of {recipe.json?.steps.length}
-        </Text>
       </View>
 
       <ScrollView
@@ -236,6 +231,14 @@ const RecipeComponent = ({recipe}: {recipe: Recipe}) => {
 
 const colors = theme.light;
 const styles = StyleSheet.create({
+  detailed: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    backgroundColor: colors.surfaceAlt,
+    padding: 12,
+    borderRadius: 8,
+    lineHeight: 20,
+  },
   webNavigation: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
-    padding: 20,
+    paddingBottom: 20,
     alignItems: 'center',
     backgroundColor: colors.backgroundAlt,
   },
@@ -269,15 +272,9 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: colors.background,
-    borderRadius: 12,
-    padding: 16,
-    shadowColor: colors.textPrimary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 32,
     elevation: 3,
-    borderWidth: 1,
-    borderColor: colors.border,
   },
   stepTitle: {
     fontSize: 20,

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { SavedRecipesType } from "./SavedRecipes";
 import { Button } from "@/vendor/components/ui/button";
 import * as Clipboard from 'expo-clipboard';
 import { UrlRecipeHandler } from "@/services/UrlRecipeHandler";
@@ -7,6 +6,7 @@ import { Platform } from "react-native";
 import { Text } from "@rneui/themed";
 import { UrlRecipeFetcher } from "@/services/UrlRecipeFetcher";
 import { supabase } from "@/services/SupabaseClient";
+import { SavedRecipesType } from "./ViewSavedRecipeButton";
 
 // async function getTabContent(tab: chrome.tabs.Tab) {
 //   const tabId = (tab === null ? 0 : tab.id) as number;
