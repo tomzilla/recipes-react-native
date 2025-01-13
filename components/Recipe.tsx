@@ -14,15 +14,12 @@ import {
   Platform,
 } from 'react-native';
 
-import {theme} from '@/constants/Colors';
+import { theme } from '@/constants/Colors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const StepCard = ({ step }: { step: Step }) => {
   return (
     <View style={styles.card}>
-      {/* Step Title */}
-      {/* <Text style={styles.stepTitle}>{step.id.replace(/_/g, ' ').toUpperCase()}</Text> */}
-      {/* Ingredients & Inputs */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Ingredients & Inputs</Text>
         {step.inputs.map((input, index) => (
@@ -38,7 +35,7 @@ const StepCard = ({ step }: { step: Step }) => {
         <Text style={styles.sectionTitle}>Action</Text>
         <View style={styles.actionContainer}>
           <Text style={styles.actionText}>{step.action.name}</Text>
-          {step.action.duration && <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text>}
+          {step.action.duration ? <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text> :}
           {step.action.temperature && (
             <Text style={styles.actionDetail}>Temperature: {step.action.temperature}</Text>
           )}
@@ -170,12 +167,12 @@ const Navigation = ({ currentStep, totalSteps, onNavigate, scrollX }: Navigation
   );
 };
 
-const RecipeComponent = ({recipe}: {recipe: Recipe}) => {
+const RecipeComponent = ({ recipe }: { recipe: Recipe }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const scrollViewRef = useRef<ScrollView | null>(null);
   const scrollX = useRef(new Animated.Value(0)).current;
 
-  const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent> ) => {
+  const handleMomentumScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const position = event.nativeEvent.contentOffset.x;
     const index = Math.round(position / SCREEN_WIDTH);
     setCurrentStep(index);
@@ -217,7 +214,7 @@ const RecipeComponent = ({recipe}: {recipe: Recipe}) => {
         ))}
       </ScrollView>
 
-      <Navigation 
+      <Navigation
         currentStep={currentStep}
         totalSteps={recipe.json?.steps.length}
         onNavigate={handleNavigation}
@@ -301,6 +298,7 @@ const styles = StyleSheet.create({
   ingredientName: {
     fontSize: 16,
     color: colors.textPrimary,
+    textTransform: 'capitalize',
   },
   ingredientQuantity: {
     fontSize: 16,
@@ -317,12 +315,14 @@ const styles = StyleSheet.create({
   actionText: {
     fontSize: 16,
     color: colors.textPrimary,
+    textTransform: 'capitalize',
     marginBottom: 8,
   },
   actionDetail: {
     fontSize: 14,
     color: colors.secondary,
     fontWeight: '500',
+    textTransform: 'capitalize',
   },
   outputContainer: {
     backgroundColor: colors.sage + '15', // Adding transparency
@@ -334,6 +334,9 @@ const styles = StyleSheet.create({
   outputText: {
     fontSize: 16,
     color: colors.textPrimary,
+    textTransform: 'capitalize',
+
+
     marginBottom: 8,
   },
   indicatorsContainer: {
@@ -343,6 +346,8 @@ const styles = StyleSheet.create({
   },
   indicatorsTitle: {
     fontSize: 14,
+    textTransform: 'capitalize',
+
     fontWeight: '600',
     marginBottom: 4,
     color: colors.wine,
@@ -350,6 +355,7 @@ const styles = StyleSheet.create({
   indicator: {
     fontSize: 14,
     color: colors.textPrimary,
+    textTransform: 'capitalize',
     marginLeft: 8,
     marginVertical: 2,
   },
