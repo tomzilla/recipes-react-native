@@ -43,9 +43,9 @@ function TabLayout() {
           options={{
             tabBarIcon: ({ color }) => <FontAwesome size={28} name="search" color={theme.light.secondary} />,
           }} />
-        <Tabs.Screen name="premium"
+        <Tabs.Screen name="grocery"
           options={{
-            tabBarIcon: ({ color }) => <FontAwesome size={28} name="star" color={theme.light.secondary} />,
+            tabBarIcon: ({ color }) => <FontAwesome size={28}  name="shopping-cart"  color={theme.light.secondary} />,
           }} />
       </Tabs>
     </>

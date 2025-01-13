@@ -8,7 +8,6 @@ import RecipeGroup from './RecipeGroup';
 interface CuratedRecipesViewProps {
   onRecipePress: (recipe: Recipe) => void;
 }
-
 export const CuratedRecipesView: React.FC<CuratedRecipesViewProps> = ({ onRecipePress }) => {
   const colorScheme = useColorScheme();
   const colors = theme[colorScheme === 'dark' ? 'dark' : 'light'];

@@ -7,18 +7,18 @@ function TabLayout() {
     <Stack
     screenOptions={{
       headerStyle: {
-        backgroundColor: theme.light.backgroundAlt,
+        backgroundColor: theme.light.primary,
       },
-      headerTintColor: theme.light.textPrimary,
+      headerTintColor: theme.light.secondary,
       headerTitleStyle: {
         fontWeight: '600',
         fontSize: 18,
-        color: theme.light.textPrimary,
+        color: theme.light.secondary,
       },
       headerShadowVisible: false, // Removes the bottom border
       headerBackTitle: undefined, // Removes the back button text on iOS
       contentStyle: {
-        backgroundColor: theme.light.background,
+        backgroundColor: theme.light.primary,
       }
     }}
   >
@@ -28,13 +28,13 @@ function TabLayout() {
         headerTitle: "My Recipes",
         headerLargeTitle: true, // iOS large title
         headerLargeTitleStyle: {
-          color: theme.light.textPrimary,
+          color: theme.light.secondary,
         },
         headerSearchBarOptions: {
           placeholder: "Search recipes...",
           headerIconColor: theme.light.secondary,
-          textColor: theme.light.textPrimary,
-          hintTextColor: theme.light.textSecondary,
+          textColor: theme.light.secondary,
+          hintTextColor: theme.light.secondary,
         },
       }}
     />

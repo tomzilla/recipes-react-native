@@ -4,7 +4,7 @@
 
 :root {
   /* Primary Colors */
-  --color-brand: #D64D57;      /* Rich raspberry red */
+  --color-primary: #D64D57;      /* Rich raspberry red */
   --color-secondary: #FF9566;  /* Warm coral */
   
   /* Neutral Colors */
@@ -41,12 +41,12 @@
 }
 
 .bg-accent {
-  background-color: var(--color-brand);
+  background-color: var(--color-primary);
 }
 
 /* Interactive Elements */
 .btn-primary {
-  background-color: var(--color-brand);
+  background-color: var(--color-primary);
   color: var(--color-text-light);
 }
 

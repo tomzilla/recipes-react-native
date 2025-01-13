@@ -1,10 +1,11 @@
 import { CuratedRecipesView } from "@/components/CuratedRecipesView";
+import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function Explore() {
     return (<View>
-      <CuratedRecipesView onRecipePress={() => {
-        console.log('pressed');
+      <CuratedRecipesView onRecipePress={(recipe) => {
+        router.navigate(`/home/(tabs)/explore/${recipe.id}`)
       }} />
     </View>);
 }

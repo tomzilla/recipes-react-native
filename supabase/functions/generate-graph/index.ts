@@ -16,6 +16,7 @@ interface Recipe {
     inputs: {
       name: string;
       quantity?: string;
+      type: string;
     }[];
     action: {
       name: string;
@@ -40,6 +41,7 @@ const RecipeResponseFormat = zodResponseFormat(
       name: z.string(),
       inputs: z.array(z.object({
         name: z.string(),
+        type: z.enum(['ingredient', 'intermediate']),
         quantity: z.string().optional(),
       })),
       action: z.object({
@@ -62,8 +64,7 @@ const RecipeResponseFormat = zodResponseFormat(
 const system_prompt =
   `You are an expert at extracting cooking and extracting structured data from a recipe. 
 You will be given some content. Extract the recipe. Make sure to use the exact numbers indicated in the recipe for quantity, temperature, and time.
-Inputs must be an ingredient or an output from a previous step. The "detailed" key should include a longer detailed (max 50 words) description of the step. Don't include optional keys if there's no value. Only return the JSON representation of the recipe.
-If the text does not look like a recipe, only return the error field and no values in any other fields.`;
+Inputs must be an ingredient or an output from a previous step. The "detailed" key should include a longer detailed (max 50 words) description of the step. Don't include optional keys if there's no value. Only return the JSON representation of the recipe.`;
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -130,7 +131,7 @@ Deno.serve(async (req) => {
       imageUrlParam = image_url;
       console.log("Content length: ", content?.length);
 
-      if (content?.length < 10000) {
+      if (content?.length < 1000) {
         return new Response(
           "Not enough content",
           { status: 400 },
@@ -154,6 +155,7 @@ Deno.serve(async (req) => {
     }
 
     console.log("Calling openai");
+    console.log(content);
     const openai = new OpenAI(
       {
         apiKey: Deno.env.get("OPENAI_API_KEY") ??

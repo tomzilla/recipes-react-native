@@ -10,9 +10,10 @@ export class UrlRecipeHandler<T extends RecipeFetcher> extends RecipeHandler<T> 
     console.log("Match: ", image_url)
 
     let content = data.match(/<body[\S\s]*?>[\S\s]*?<\/body>/g)?.[0];
-    content = content?.replace(/<(style|img|script)[\S\s]*?>[\S\s]*?<\/(style|img|script)>/g, '');
-    content = content?.replace(/<[\S\s]*?>/g, '');
-    content = content?.replace(/[\n\t]/g, '');
+    content = content?.replace(/<(style|img|script)[\S\s]*?>[\S\s]*?<\/(style|img|script)>/g, ' ');
+    content = content?.replace(/<[\S\s]*?>/g, ' ');
+    content = content?.replace(/[\n\t]/g, ' ');
+    content = decodeURI(content || "");
     console.log('content length: ', content?.length);
     console.log("End replace: ", new Date().toLocaleTimeString());
 

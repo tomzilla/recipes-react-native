@@ -3,9 +3,11 @@ import { View, Text, TouchableOpacity, Image, StyleSheet, ActivityIndicator, Ale
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/services/SupabaseClient';
 import { theme } from '@/constants/Colors';
-import { ArrowRight } from 'lucide-react-native';
+import { ArrowRight, Camera } from 'lucide-react-native';
 import { useAuth } from '@/hooks/useAuth';
 import { useSavedRecipes } from '@/hooks/useSavedRecipes';
+import { KeyboardAvoidingView } from 'react-native';
+import { Platform } from 'react-native';
 
 export default function ImageUpload() {
   const [image, setImage] = useState<string | null>(null);
@@ -16,7 +18,7 @@ export default function ImageUpload() {
   }
   const { fetchSavedRecipes } = useSavedRecipes(auth?.user?.id);
 
-  const handleImagePick = async () => {
+  const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permissionResult.granted) {
@@ -71,32 +73,48 @@ export default function ImageUpload() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Upload Recipe Image ✨</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <View style={styles.content}>
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Camera size={32} color={theme.light.brand} />
+          <Text style={styles.title}>Recipe Snap ✨</Text>
+        </View>
 
-      <TouchableOpacity style={styles.imagePicker} onPress={handleImagePick}>
-        {image ? (
-          <Image source={{ uri: image }} style={styles.imagePreview} />
-        ) : (
-          <Text style={styles.imagePickerText}>Select an Image</Text>
-        )}
-      </TouchableOpacity>
+        {/* Description Section */}
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>
+            Got a recipe on a piece of paper or in a cookbook? Snap a pic, and let our AI work its magic. No more typing out recipes like it’s 1999. 🕺
+          </Text>
+        </View>
 
-      <TouchableOpacity
-        style={[styles.uploadButton, isLoading && styles.uploadButtonDisabled]}
-        onPress={handleUpload}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <ActivityIndicator color={theme.light.background} />
-        ) : (
-          <>
-            <Text style={styles.uploadButtonText}>Extract & Save Recipe</Text>
-            <ArrowRight size={20} color={theme.light.background} />
-          </>
+        {/* Image Picker Section */}
+        <View style={styles.inputContainer}>
+          <Text style={styles.inputLabel}>Upload Your Recipe Image 📸</Text>
+          <TouchableOpacity onPress={pickImage} style={styles.inputButton}>
+            <Text style={styles.inputButtonText}>Choose an Image</Text>
+          </TouchableOpacity>
+        </View>
+
+        {image && (
+          <Image source={{ uri: image }} style={styles.preview} />
         )}
-      </TouchableOpacity>
-    </View>
+
+        {/* Upload Button */}
+        <TouchableOpacity
+          onPress={handleUpload}
+          style={[styles.inputButton, !image && styles.buttonDisabled]}
+          disabled={!image || isLoading}
+        >
+          <Text style={styles.inputButtonText}>
+            {isLoading ? 'Analyzing Image... 🔬' : 'Extract Recipe 🍲'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -104,56 +122,75 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.light.background,
+  },
+  content: {
+    flex: 1,
     padding: 20,
+    paddingTop: 60,
+  },
+  header: {
+    marginBottom: 30,
+    flexDirection: 'row',
     alignItems: 'center',
   },
   title: {
     fontSize: 24,
     fontWeight: '700',
     color: theme.light.textPrimary,
-    marginBottom: 20,
+    marginLeft: 12,
   },
-  imagePicker: {
+  descriptionContainer: {
+    backgroundColor: theme.light.backgroundAlt,
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 30,
     width: '100%',
-    height: 200,
-    backgroundColor: theme.light.surfaceAlt,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: theme.light.border,
   },
-  imagePickerText: {
+  description: {
     fontSize: 16,
-    color: theme.light.textSecondary,
+    fontWeight: '600',
+    color: theme.light.textPrimary,
+    lineHeight: 22,
   },
-  imagePreview: {
+  inputContainer: {
+    marginBottom: 24,
     width: '100%',
-    height: '100%',
-    borderRadius: 8,
   },
-  uploadButton: {
+  inputLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: theme.light.textPrimary,
+    marginBottom: 8,
+  },
+  inputButton: {
     backgroundColor: theme.light.brand,
     borderRadius: 8,
     padding: 16,
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
     shadowColor: theme.light.textPrimary,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
     shadowOpacity: 0.1,
     shadowRadius: 3,
     elevation: 2,
   },
-  uploadButtonDisabled: {
-    opacity: 0.6,
+  buttonDisabled: {
+    backgroundColor: theme.light.border,
   },
-  uploadButtonText: {
+  inputButtonText: {
     color: theme.light.background,
     fontSize: 18,
     fontWeight: '600',
-    marginRight: 8,
+  },
+  preview: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: theme.light.border,
   },
 });

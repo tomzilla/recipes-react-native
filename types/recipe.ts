@@ -27,8 +27,14 @@ export interface Step {
   };
 }
 
+export interface RawIngredient {
+  name: string;
+  quantity: string;
+}
+
 export interface RecipeJson {
   name: string;
+  raw_ingredients: RawIngredient[];
   steps: Step[];
 }
 

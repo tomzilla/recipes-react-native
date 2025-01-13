@@ -7,6 +7,7 @@ import { View, StyleSheet } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { theme } from "@/constants/Colors";
 import PlanRecipeComponent from "@/components/PlanRecipe";
+import RecipeSideMenu from "@/components/RecipeSideMenu";
 
 export default function Index() {
   const local = useLocalSearchParams();
@@ -38,7 +39,7 @@ export default function Index() {
   return (
     <View style={[styles.container, { backgroundColor: theme.light.background }]}>
       <RecipeComponent recipe={recipe} />
-      <PlanRecipeComponent recipe={recipe} />
+      <RecipeSideMenu recipe={recipe} />
     </View>
   );
 }
