@@ -1,5 +1,6 @@
 {
     "imports": {
+      "@b-fuze/deno-dom": "jsr:@b-fuze/deno-dom@^0.1.49",
       "openai": "npm:openai@^4.77.3",
       "@supabase/supabase-js": "npm:@supabase/supabase-js@^2.47.10",
       "services": "../../../services",

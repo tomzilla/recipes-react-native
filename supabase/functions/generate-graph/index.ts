@@ -3,6 +3,7 @@ import { zodResponseFormat } from "npm:openai/helpers/zod";
 import { z } from "npm:zod";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { DOMParser, Element } from "jsr:@b-fuze/deno-dom";
 import { corsHeaders } from "../_shared/cors.ts";
 import { UrlRecipeHandler } from "../../../services/UrlRecipeHandler.ts";
 import { UrlRecipeFetcher } from "../../../services/UrlRecipeFetcher.ts";
@@ -30,6 +31,9 @@ interface Recipe {
     success_indicators?: string[];
   }[];
   source_url: string;
+  tools: {
+    name: string;
+  }[];
 }
 
 const RecipeResponseFormat = zodResponseFormat(
@@ -57,14 +61,20 @@ const RecipeResponseFormat = zodResponseFormat(
       detailed: z.string(),
     })),
     source_url: z.string(),
+    tools: z.array(z.object({
+      name: z.string()
+    }))
   }),
   "recipe",
 );
 
 const system_prompt =
   `You are an expert at extracting cooking and extracting structured data from a recipe. 
-You will be given some content. Extract the recipe. Make sure to use the exact numbers indicated in the recipe for quantity, temperature, and time.
-Inputs must be an ingredient or an output from a previous step. The "detailed" key should include a longer detailed (max 50 words) description of the step. Don't include optional keys if there's no value. Only return the JSON representation of the recipe.`;
+You will be given some content. Extract the necessary steps as outlined in the recipe. Err on the side of more steps rather than less steps.
+Make sure to use the exact numbers indicated in the recipe for quantity, temperature, and time.
+Inputs must be an ingredient or an output from a previous step. The "detailed" key should include a longer detailed (max 50 words) description of the step.
+The tools key should contain any special tools or equipment that's needed. Exclude items that most people have.
+Don't include optional keys if there's no value. Only return the JSON representation of the recipe.`;
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -127,7 +137,19 @@ Deno.serve(async (req) => {
 
       const { content: fetchedContent, image_url } = await handler
         .fetchRecipe();
-      content = fetchedContent;
+      
+      const doc = new DOMParser().parseFromString(
+        fetchedContent,
+        "text/html",
+      );
+      const tags = ['script', 'img', 'symbol', 'svg', 'style'];
+      
+      tags.forEach((tag) => {
+        const elements = doc.querySelectorAll(tag);
+        elements.forEach((e:Element) => e.remove());
+      })
+      
+      content = doc.textContent;
       imageUrlParam = image_url;
       console.log("Content length: ", content?.length);
 
@@ -155,7 +177,6 @@ Deno.serve(async (req) => {
     }
 
     console.log("Calling openai");
-    console.log(content);
     const openai = new OpenAI(
       {
         apiKey: Deno.env.get("OPENAI_API_KEY") ??
@@ -219,6 +240,7 @@ Deno.serve(async (req) => {
 
       imageUrl = imageResponse.url;
     }
+    recipeJson.tools = recipeJson.tools.map((tool) => ({name: tool.name.toLocaleLowerCase()}));
     const { data: inserted, error: dbError } = await supabase.from("recipes").upsert({
       url: url || "",
       json: recipeJson,
@@ -231,6 +253,12 @@ Deno.serve(async (req) => {
     }
     console.log("Inserted new recipe: ", inserted);
     recipe = inserted;
+
+    await supabase.from('amazon_product_link').upsert(recipeJson.tools.map((tool) => {
+      return {
+        product_name: tool.name
+      };
+    }));
   }
   console.log("recipe: ", recipe);
 

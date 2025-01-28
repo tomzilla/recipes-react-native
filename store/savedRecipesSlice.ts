@@ -6,6 +6,7 @@ import { RootState } from './store';
 
 const initialState: SavedRecipesState = {
   recipes: [],
+  recipeIds: {},
   status: 'idle',
   error: null
 };
@@ -30,7 +31,7 @@ export const fetchSavedRecipes = createAsyncThunk(
       .eq('user_id', userId);
 
     const { data, error } = await supabaseQuery.returns<SavedRecipesType[]>();
-    
+    // hvrdQnX6bV2WqPI5
     if (error) {
       throw error;
     }
@@ -46,6 +47,7 @@ const savedRecipesSlice = createSlice({
     clearSavedRecipes: (state) => {
       state.recipes = [];
       state.status = 'idle';
+      state.recipeIds = {};
       state.error = null;
     },
   },
@@ -58,6 +60,11 @@ const savedRecipesSlice = createSlice({
         state.status = 'succeeded';
         // @ts-ignore
         state.recipes = action.payload;
+        const newRecipeIds:any = {};
+        action.payload.forEach((savedRecipe) => {
+          newRecipeIds[savedRecipe.recipe.id.toString()] = savedRecipe;
+        });
+        state.recipeIds = newRecipeIds;
         state.error = null;
       })
       .addCase(fetchSavedRecipes.rejected, (state, action) => {
@@ -68,6 +75,7 @@ const savedRecipesSlice = createSlice({
 });
 
 export const selectAllSavedRecipes = (state: RootState) => state.savedRecipes.recipes;
+export const selectRecipeIds = (state: RootState) => state.savedRecipes.recipeIds;
 export const selectSavedRecipesStatus = (state: RootState) => state.savedRecipes.status;
 export const selectSavedRecipesError = (state: RootState) => state.savedRecipes.error;
 

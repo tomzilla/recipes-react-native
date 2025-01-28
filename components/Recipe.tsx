@@ -14,10 +14,13 @@ import {
   Platform,
 } from 'react-native';
 
-import { theme } from '@/constants/Colors';
+import { NewColorMode } from '@/constants/NewColors';
+import { useColors } from '@/hooks/useColors';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const StepCard = ({ step }: { step: Step }) => {
+  const styles = getStyles(useColors());
+
   return (
     <View style={styles.card}>
       <View style={styles.section}>
@@ -35,10 +38,10 @@ const StepCard = ({ step }: { step: Step }) => {
         <Text style={styles.sectionTitle}>Action</Text>
         <View style={styles.actionContainer}>
           <Text style={styles.actionText}>{step.action.name}</Text>
-          {step.action.duration ? <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text> :}
-          {step.action.temperature && (
+          {step.action.duration ? <Text style={styles.actionDetail}>Duration: {step.action.duration}</Text> : null}
+          {step.action.temperature ? (
             <Text style={styles.actionDetail}>Temperature: {step.action.temperature}</Text>
-          )}
+          )  : null}
         </View>
       </View>
 
@@ -76,6 +79,8 @@ interface NavigationProps {
 }
 
 const Navigation = ({ currentStep, totalSteps, onNavigate, scrollX }: NavigationProps) => {
+  const styles = getStyles(useColors());
+
   if (Platform.OS !== 'web') {
     return (
       <View style={styles.pagination}>
@@ -188,12 +193,26 @@ const RecipeComponent = ({ recipe }: { recipe: Recipe }) => {
       });
     }
   };
-
+  const styles = getStyles(useColors());
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{recipe.title}</Text>
       </View>
+      <View style={styles.stepsContainer}>
+        <Text style={styles.stepIndicator}>
+          Step {currentStep + 1}&nbsp;
+        </Text>
+        <Text style={styles.totalSteps}>
+          of {recipe.json?.steps.length} 
+        </Text>
+      </View>
+      <Navigation
+        currentStep={currentStep}
+        totalSteps={recipe.json?.steps.length}
+        onNavigate={handleNavigation}
+        scrollX={scrollX}
+      />
 
       <ScrollView
         ref={scrollViewRef}
@@ -213,25 +232,17 @@ const RecipeComponent = ({ recipe }: { recipe: Recipe }) => {
           </View>
         ))}
       </ScrollView>
-
-      <Navigation
-        currentStep={currentStep}
-        totalSteps={recipe.json?.steps.length}
-        onNavigate={handleNavigation}
-        scrollX={scrollX}
-      />
     </View>
   );
 };
 
 // Color palette
 
-const colors = theme.light;
-const styles = StyleSheet.create({
+const getStyles = (colors: NewColorMode) => StyleSheet.create({
   detailed: {
     fontSize: 14,
-    color: colors.textSecondary,
-    backgroundColor: colors.surfaceAlt,
+    color: colors.textDarkGray,
+    backgroundColor: colors.white,
     padding: 12,
     borderRadius: 8,
     lineHeight: 20,
@@ -240,44 +251,51 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
+    paddingVertical: 15,
     gap: 16,
   },
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
   },
   header: {
     paddingBottom: 20,
     alignItems: 'center',
-    backgroundColor: colors.backgroundAlt,
+    backgroundColor: colors.white,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: colors.wine,
-    marginBottom: 8,
+    color: colors.textDarkerGray,
   },
-  stepIndicator: {
+  totalSteps: {
     fontSize: 16,
-    color: colors.textPrimary,
+    height: 30,
+    alignContent:'flex-end',
+    color: colors.textDarkerGray,
   },
   slide: {
     width: SCREEN_WIDTH,
-    paddingHorizontal: 20,
-    backgroundColor: colors.background,
+    paddingHorizontal: 15,
+    backgroundColor: colors.white,
   },
   card: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
     paddingHorizontal: 16,
     paddingVertical: 32,
     elevation: 3,
   },
-  stepTitle: {
-    fontSize: 20,
+  stepsContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    lineHeight: 30,
+  },
+  stepIndicator: {
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 16,
-    color: colors.brand,
+    height: 30,
+    color: colors.textDarkerGray,
   },
   section: {
     marginBottom: 20,
@@ -286,27 +304,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 8,
-    color: colors.wine,
+    color: colors.textDarkerGray,
   },
   ingredient: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 8,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: colors.black,
   },
   ingredientName: {
     fontSize: 16,
-    color: colors.textPrimary,
+    color: colors.textDarkGray,
     textTransform: 'capitalize',
   },
   ingredientQuantity: {
     fontSize: 16,
-    color: colors.secondary,
+    color: colors.textDarkGray,
     fontWeight: '600',
   },
   actionContainer: {
-    backgroundColor: colors.backgroundAlt,
+    backgroundColor: colors.white,
     padding: 12,
     borderRadius: 8,
     borderLeftWidth: 3,
@@ -314,26 +332,26 @@ const styles = StyleSheet.create({
   },
   actionText: {
     fontSize: 16,
-    color: colors.textPrimary,
+    color: colors.textDarkGray,
     textTransform: 'capitalize',
     marginBottom: 8,
   },
   actionDetail: {
     fontSize: 14,
-    color: colors.secondary,
+    color: colors.textDarkGray,
     fontWeight: '500',
     textTransform: 'capitalize',
   },
   outputContainer: {
-    backgroundColor: colors.sage + '15', // Adding transparency
+    backgroundColor: colors.white,
     padding: 12,
     borderRadius: 8,
     borderLeftWidth: 3,
-    borderLeftColor: colors.sage,
+    borderLeftColor: colors.white,
   },
   outputText: {
     fontSize: 16,
-    color: colors.textPrimary,
+    color: colors.textDarkGray,
     textTransform: 'capitalize',
 
 
@@ -350,26 +368,27 @@ const styles = StyleSheet.create({
 
     fontWeight: '600',
     marginBottom: 4,
-    color: colors.wine,
+    color: colors.textDarkGray,
   },
   indicator: {
     fontSize: 14,
-    color: colors.textPrimary,
+    color: colors.textDarkGray,
     textTransform: 'capitalize',
     marginLeft: 8,
     marginVertical: 2,
   },
   pagination: {
     flexDirection: 'row',
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
   },
   dot: {
-    width: 8,
     height: 8,
+    flex: 1,
     borderRadius: 4,
-    backgroundColor: colors.border,
+    backgroundColor: colors.inactive,
     marginHorizontal: 4,
   },
   activeDot: {

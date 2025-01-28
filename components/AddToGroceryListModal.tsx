@@ -154,7 +154,7 @@ export function AddToGroceryListModal({ recipe, isVisible, onClose }: AddToGroce
               style={[styles.modalButton, { backgroundColor: colors.secondary }]}
               onPress={handleAddToGroceryList}
             >
-              <Text style={[styles.buttonText, { color: colors.secondary }]}>
+              <Text style={[styles.buttonText, { color: colors.surface }]}>
                 Add Selected
               </Text>
             </TouchableOpacity>

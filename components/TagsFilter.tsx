@@ -15,6 +15,7 @@ import { theme } from '@/constants/Colors';
 import { supabase } from '@/services/SupabaseClient';
 import { useTags } from '@/hooks/useTags';
 import { Tables } from '@/services/database.types';
+import { useColors } from '@/hooks/useColors';
 
 interface TagsFilterProps {
   onSelectionChange: (selectedTags: number[]) => void;
@@ -24,8 +25,7 @@ interface TagsFilterProps {
 const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const colorScheme = useColorScheme() as 'light' | 'dark';
-  const colors = theme[colorScheme];
+  const colors = useColors();
   
   const {
     selectedTags,
@@ -74,13 +74,13 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
         onPress={() => toggleTag(tag.id)}
         style={[
           styles.tag,
-          { backgroundColor: isSelected ? colors.brand : colors.backgroundAlt },
+          { backgroundColor: isSelected ? colors.yellow : colors.disabled },
         ]}
       >
         <Text
           style={[
             styles.tagText,
-            { color: isSelected ? colors.textPrimary : colors.textPrimary },
+            { color: isSelected ? colors.textDarkerGray : colors.textLightGray },
           ]}
         >
           {tag.name}
@@ -99,7 +99,7 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
       <Text>
         {parts.map((part, index) => (
           part.toLowerCase() === highlight.toLowerCase() ? (
-            <Text key={index} style={{ backgroundColor: colors.butter }}>
+            <Text key={index} >
               {part}
             </Text>
           ) : (
@@ -113,7 +113,7 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <Text style={{ color: colors.textSecondary }}>Loading tags...</Text>
+        <Text style={{ color: colors.textLightGray }}>Loading tags...</Text>
       </View>
     );
   }
@@ -129,24 +129,24 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
   return (
     <View style={styles.container}>
       {/* Main tags list */}
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.scrollView}
-      >
-        {sortedTags.slice(0, maxVisibleTags).map(tag => renderTag(tag))}
-        {availableTags.length > maxVisibleTags && (
+      <View style={styles.filterHeader}>
+      <Text style={[styles.filterHeaderText, { color: colors.textLightGray, flex: 1, fontSize: 17 }]}>Filter ({selectedTags.length}):</Text>
+      {availableTags.length > maxVisibleTags && (
           <TouchableOpacity
-            style={[styles.moreButton, { backgroundColor: colors.backgroundAlt }]}
             onPress={() => setModalVisible(true)}
           >
-            <Text style={[styles.moreButtonText, { color: colors.textPrimary }]}>
-              More
+            <Text style={[styles.filterHeaderText, { color: colors.brand, fontSize: 12 }]}>
+              See All
             </Text>
-            <ChevronRight size={16} color={colors.textPrimary} />
           </TouchableOpacity>
         )}
-      </ScrollView>
+      </View>
+      <View 
+        style={styles.tagsContainer}
+      >
+        {sortedTags.slice(0, maxVisibleTags).map(tag => renderTag(tag))}
+      
+      </View>
 
       {/* Tags modal */}
       <Modal
@@ -155,28 +155,28 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
         transparent={true}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={[styles.modalContainer, { backgroundColor: colors.overlay }]}>
-          <View style={[styles.modalContent, { backgroundColor: colors.background }]}>
+        <View style={[styles.modalContainer, { backgroundColor: colors.white }]}>
+          <View style={[styles.modalContent, { backgroundColor: colors.white }]}>
             <View style={styles.modalHeader}>
-              <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
+              <Text style={[styles.modalTitle, { color: colors.textDarkerGray }]}>
                 Filter by Tags
               </Text>
               <TouchableOpacity
                 onPress={() => setModalVisible(false)}
                 style={styles.closeButton}
               >
-                <X size={24} color={colors.textPrimary} />
+                <X size={24} color={colors.textDarkerGray} />
               </TouchableOpacity>
             </View>
 
             <TextInput
               style={[styles.searchInput, { 
-                backgroundColor: colors.backgroundAlt,
-                color: colors.textPrimary,
-                borderColor: colors.border,
+                backgroundColor: colors.white,
+                color: colors.textDarkerGray,
+                borderColor: colors.black,
               }]}
               placeholder="Search tags..."
-              placeholderTextColor={colors.textSecondary}
+              placeholderTextColor={colors.textLightGray}
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
@@ -190,7 +190,7 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
                     { 
                       backgroundColor: selectedTags.includes(item.id) 
                         ? colors.brand 
-                        : colors.surface,
+                        : colors.white,
                     },
                   ]}
                   onPress={() => toggleTag(item.id)}
@@ -222,11 +222,22 @@ const TagsFilter = ({ onSelectionChange, maxVisibleTags = 5 }: TagsFilterProps) 
 };
 
 const styles = StyleSheet.create({
+  filterHeader: {
+    flex: 1,
+    flexDirection: 'row',
+    marginVertical: 8,
+  },
+  filterHeaderText: {
+    fontWeight: '600',
+    lineHeight: 22,
+  },
   container: {
     marginVertical: 10,
   },
-  scrollView: {
-    flexGrow: 0,
+  tagsContainer: {
+    flexWrap: 'wrap',
+    flex: 1,
+    flexDirection: 'row',
   },
   tag: {
     paddingHorizontal: 12,

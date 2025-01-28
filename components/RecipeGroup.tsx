@@ -1,8 +1,9 @@
 import { theme } from '@/constants/Colors';
+import { NewColorMode } from '@/constants/NewColors';
 import { supabase } from '@/services/SupabaseClient';
 import { Recipe } from '@/types/recipe';
 import React, { ReactElement } from 'react';
-import {  StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { View, Text, Pressable } from 'react-native';
 
 
@@ -10,7 +11,7 @@ interface RecipeGroupProps {
   title?: string;
   recipes: Recipe[];
   onRecipePress: (recipe: Recipe) => void;
-  colors: typeof theme.light;
+  colors: NewColorMode;
   accessoryButton?: ReactElement
 }
 const RecipeGroup = ({ title, recipes, onRecipePress, colors, accessoryButton }: RecipeGroupProps) => {
@@ -18,9 +19,10 @@ const RecipeGroup = ({ title, recipes, onRecipePress, colors, accessoryButton }:
 
   return (
     <View style={styles.groupContainer}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>{title}</Text>
-      </View>
+      {title && (
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>{title}</Text>
+        </View>)}
 
       <View style={styles.recipesGrid}>
         {recipes.map((recipe, index) => (<>
@@ -40,58 +42,61 @@ const RecipeGroup = ({ title, recipes, onRecipePress, colors, accessoryButton }:
             </View>
           </Pressable>
           {accessoryButton}
-          </>
+        </>
         ))}
-        </View >
+      </View >
     </View>
-      );
+  );
 };
 
-const getStyles = (colors: typeof theme.light) => StyleSheet.create({
-        contentContainer: {
-        paddingVertical: 16,
+const getStyles = (colors: NewColorMode) => StyleSheet.create({
+  contentContainer: {
+    paddingVertical: 16,
   },
-      groupContainer: {
-        marginBottom: 24,
+  groupContainer: {
+    marginBottom: 24,
   },
-      headerContainer: {
-        paddingHorizontal: 16,
-      marginBottom: 12,
+  headerContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 12,
   },
-      headerText: {
-        fontSize: 20,
-      fontWeight: '600',
-      color: colors.textPrimary,
+  headerText: {
+    fontSize: 22,
+    fontWeight: '700',
+    color: colors.textDarkerGray,
   },
-      recipesGrid: {
-        flexDirection: 'row',
-      flexWrap: 'wrap',
-      paddingHorizontal: 8,
+  recipesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 8,
   },
-      recipeCard: {
-        width: '50%',
-      paddingHorizontal: 8,
-      marginBottom: 16,
+  recipeCard: {
+    width: '50%',
+    paddingHorizontal: 8,
+    marginBottom: 16,
   },
-      leftCard: {
-        paddingRight: 8,
+  leftCard: {
+    paddingRight: 8,
   },
-      recipeImagePlaceholder: {
-      backgroundColor: colors.surfaceAlt,
-      height: 160,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      borderRadius: 12,
-      marginBottom: 8,
+  recipeImagePlaceholder: {
+    backgroundColor: colors.disabled,
+    height: 130,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    borderRadius: 12,
+    marginBottom: 8,
   },
-      recipeContent: {
-        paddingHorizontal: 4,
+  recipeContent: {
+    paddingHorizontal: 4,
   },
-      recipeTitle: {
-        fontSize: 16,
-      fontWeight: '500',
-      color: colors.textPrimary,
+  recipeTitle: {
+    lineHeight: 20,
+    height: 40,
+    fontSize: 15,
+    wordWrap: 'ellipsis',
+    fontWeight: '600',
+    color: colors.textDarkGray,
   },
 });
 
-      export default RecipeGroup;
+export default RecipeGroup;

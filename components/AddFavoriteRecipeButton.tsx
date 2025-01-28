@@ -1,54 +1,59 @@
 import { theme } from "@/constants/Colors";
 import { Recipe } from "@/types/recipe";
-import { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useAuth } from "@/hooks/useAuth";
 import { useColorScheme } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { AddToGroceryListModal } from "./AddToGroceryListModal";
-import { useGroceryItems } from "@/hooks/useGroceryItems";
+import { useSavedRecipes } from "@/hooks/useSavedRecipes";
+import { useCallback } from "react";
 
-interface GroceryListButtonProps {
+interface AddFavoriteRecipeButtonProps {
   recipe: Recipe;
 }
 
-export default function GroceryListButton({ recipe }: GroceryListButtonProps) {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function AddFavoriteRecipeButton({ recipe }: AddFavoriteRecipeButtonProps) {
   const colorScheme = useColorScheme();
   const colors = theme[colorScheme === 'dark' ? 'dark' : 'light'];
   const auth = useAuth();
   if (!auth?.user?.id) {
     return null;
   }
-  const {fetchItems} = useGroceryItems(auth?.user?.id);
+
+  const {recipeIds, saveRecipe, unsaveRecipe, fetchSavedRecipes} = useSavedRecipes(auth?.user?.id);
+
+  const handlePress = useCallback(() => {
+    (async () => {
+      let p;
+      console.log(recipeIds, recipe.id)
+      if (recipe.id.toString() in recipeIds) {
+        p = unsaveRecipe(recipe.id);
+      } else {
+        p = saveRecipe(recipe.id);
+      }
+      await p;
+      console.log('refreshing');
+      fetchSavedRecipes();
+    })();
+  }, [recipeIds]);
 
   return (
     <View>
       <View style={[styles.floatingButton]}>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: colors.secondary }]}
-          onPress={() => setModalVisible(true)}
+          onPress={() => handlePress()}
         >
-          <FontAwesome size={28} name="shopping-cart" color={theme.light.surface} />
+          <FontAwesome size={28} name="heart" color={recipe.id.toString() in recipeIds ? 'red' : theme.light.surface} />
         </TouchableOpacity>
       </View>
-
-      <AddToGroceryListModal
-        recipe={recipe}
-        isVisible={modalVisible}
-        onClose={() => {
-          setModalVisible(false);
-          fetchItems();
-        }}
-      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   floatingButton: {
-    borderRadius: 30,
     marginTop: 16,
+    borderRadius: 30,
   },
   button: {
     padding: 12,

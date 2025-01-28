@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser, clearUser, setLoading, setError, setInitialized } from '../store/authSlice';
+import { setUser, clearUser, setLoading, setError, setInitialized, setSession } from '../store/authSlice';
 import { supabase } from '../services/SupabaseClient';
 import { RootState } from '@/store/store';
 import { AuthError } from 'expo-auth-session';
 
 export const useAuth = () => {
   const dispatch = useDispatch();
-  const { user, isLoading, error, initialized } = useSelector((state: RootState) => state.auth);
+  const { user, isLoading, error, initialized, session } = useSelector((state: RootState) => state.auth);
 
   const handleSignIn = async (email: string, password: string) => {
     try {
@@ -17,6 +17,9 @@ export const useAuth = () => {
       
       if (data?.user) {
         dispatch(setUser(data.user));
+      } 
+      if  (data?.session) {
+        dispatch(setSession(data.session));
       }
     } catch (error) {
       dispatch(setError((error as AuthError).message));
@@ -35,6 +38,9 @@ export const useAuth = () => {
       
       if (data?.user) {
         dispatch(setUser(data.user));
+      } 
+      if  (data?.session) {
+        dispatch(setSession(data.session));
       }
     } catch (error) {
       dispatch(setError((error as AuthError).message));
@@ -83,6 +89,7 @@ export const useAuth = () => {
 
   return {
     user,
+    session,
     isLoading,
     error,
     handleSignIn,

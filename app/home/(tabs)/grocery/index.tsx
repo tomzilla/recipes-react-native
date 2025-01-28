@@ -67,7 +67,7 @@ export default function GroceryListManager() {
   const renderRightActions = (item: GroceryItem) => {
     return (
       <TouchableOpacity
-        style={[styles.deleteAction, { backgroundColor: colors.background }]}
+        style={[styles.deleteAction, { backgroundColor: colors.wine }]}
         onPress={() => handleDeleteItem(item)}
       >
         <FontAwesome name="trash" size={24} color="white" />
@@ -83,7 +83,7 @@ export default function GroceryListManager() {
       key={item.id}
     >
       <TouchableOpacity
-        style={[styles.itemRow, { backgroundColor: colors.sage }]}
+        style={[styles.itemRow, { backgroundColor: colors.surface }]}
         onPress={() => handleToggleItem(item)}
       >
         <Checkbox 
@@ -94,7 +94,7 @@ export default function GroceryListManager() {
           <Text 
             style={[
               styles.itemName, 
-              { color: colors.secondary },
+              { color: colors.textPrimary },
               item.checked && styles.checkedItemText
             ]}
           >
@@ -136,14 +136,14 @@ export default function GroceryListManager() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.textPrimary} />
+        <ActivityIndicator size="large" color={colors.brand} />
       </View>
     );
   }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={[styles.container, { backgroundColor: colors.sage }]}>
+      <View style={[styles.container, { backgroundColor: colors.surface }]}>
         {items.length > 0 && (
           <TouchableOpacity
             style={[styles.clearAllButton,
@@ -151,8 +151,8 @@ export default function GroceryListManager() {
             ]}
             onPress={handleClearAll}
           >
-            <FontAwesome name="trash" size={16} color={colors.sage} />
-            <Text style={[styles.clearAllText, { color: colors.sage }]}>
+            <FontAwesome name="trash" size={16} color={colors.surface} />
+            <Text style={[styles.clearAllText, { color: colors.surface }]}>
               { clearAllConfirmation ? "Tap again to clear" : "Clear All Items" }
             </Text>
           </TouchableOpacity>
@@ -160,12 +160,12 @@ export default function GroceryListManager() {
 
         <ScrollView>
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.secondary }]}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               To Buy ({uncheckedItems.length})
             </Text>
             {uncheckedItems.map(renderGroceryItem)}
             {uncheckedItems.length === 0 && (
-              <Text style={[styles.emptyNote, { color: colors.secondary }]}>
+              <Text style={[styles.emptyNote, { color: colors.textSecondary }]}>
                 No items to buy
               </Text>
             )}
@@ -174,7 +174,7 @@ export default function GroceryListManager() {
           {checkedItems.length > 0 && (
             <View style={[styles.section, styles.checkedSection]}>
               <View style={styles.checkedHeader}>
-                <Text style={[styles.sectionTitle, { color: colors.secondary }]}>
+                <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
                   In Cart ({checkedItems.length})
                 </Text>
                 <TouchableOpacity
@@ -184,7 +184,7 @@ export default function GroceryListManager() {
                   ]}
                   onPress={handleClearChecked}
                 >
-                  <Text style={[styles.clearCheckedText, { color: colors.sage }]}>
+                  <Text style={[styles.clearCheckedText, { color: colors.surface }]}>
                     {clearCheckedConfirmation ? "Tap again to clear" : "Clear"}
                   </Text>
                 </TouchableOpacity>

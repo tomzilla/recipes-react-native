@@ -1,24 +1,26 @@
 import BackButton from "@/components/BackButton";
 import { withUser } from "@/components/WithUser";
 import { theme } from "@/constants/Colors";
+import { useColors } from "@/hooks/useColors";
 import { Stack } from "expo-router";
 function TabLayout() {
+  const colors = useColors();
   return (
     <Stack
     screenOptions={{
       headerStyle: {
-        backgroundColor: theme.light.primary,
+        backgroundColor: colors.white,
       },
-      headerTintColor: theme.light.secondary,
+      headerTintColor: colors.textDarkerGray,
       headerTitleStyle: {
-        fontWeight: '600',
-        fontSize: 18,
-        color: theme.light.secondary,
+        fontWeight: '700',
+        fontSize: 26,
+        color: colors.textDarkerGray,
       },
       headerShadowVisible: false, // Removes the bottom border
       headerBackTitle: undefined, // Removes the back button text on iOS
       contentStyle: {
-        backgroundColor: theme.light.primary,
+        backgroundColor: colors.white,
       }
     }}
   >
@@ -28,14 +30,14 @@ function TabLayout() {
         headerTitle: "My Recipes",
         headerLargeTitle: true, // iOS large title
         headerLargeTitleStyle: {
-          color: theme.light.secondary,
+          color: colors.textDarkerGray,
         },
-        headerSearchBarOptions: {
-          placeholder: "Search recipes...",
-          headerIconColor: theme.light.secondary,
-          textColor: theme.light.secondary,
-          hintTextColor: theme.light.secondary,
-        },
+        // headerSearchBarOptions: {
+        //   placeholder: "Search recipes...",
+        //   headerIconColor: colors.secondary,
+        //   textColor: colors.textPrimary,
+        //   hintTextColor: colors.secondary,
+        // },
       }}
     />
 

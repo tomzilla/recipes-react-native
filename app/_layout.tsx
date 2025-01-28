@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/store/store';
 import environment from '@/services/RelayEnvironment';
 import reactRelay from 'react-relay';
-
+import SplashContainer from '@/components/SplashContainer';
 export const RelayEnvironmentProvider =
   reactRelay.RelayEnvironmentProvider as unknown as (props: {
     children: React.ReactNode;
@@ -25,23 +25,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
+ 
   return (
     <Provider store={store}>
       <RelayEnvironmentProvider environment={environment}>
+        <SplashContainer />
         <GestureHandlerRootView style={{ flex: 1 }}>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Stack screenOptions={{ headerShown: false }}>

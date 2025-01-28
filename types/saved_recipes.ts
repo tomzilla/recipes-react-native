@@ -17,6 +17,7 @@ export interface SavedRecipesType {
 
 export interface SavedRecipesState {
   recipes: SavedRecipesType[]
+  recipeIds: any,
   status: 'idle' | 'loading' | 'succeeded' | 'failed'
   error: PostgrestError | null
 }

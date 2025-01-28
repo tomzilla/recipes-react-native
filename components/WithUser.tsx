@@ -11,9 +11,11 @@ export function withUser<P extends {}>(Component: React.ComponentType<P>) {
       auth.checkUser();
       supabase.auth.onAuthStateChange((_event, session) => {
         auth.checkUser();
-      })
+      });
+
+      console.log('checking user');
+
     }, []);
-    console.log("IN CHECK USER: ", auth.user, auth.isLoading, auth.initialized);
     const [userInitiated, setUserInitiated] = useState(false);
     useEffect(() => {
       if (auth.initialized) {

@@ -24,7 +24,6 @@ export function SavedRecipes({ savedRecipes }: SavedRecipesProps) {
     contentContainerStyle={styles.contentContainer}
   >
     <RecipeGroup
-      title="Featured Recipes"
       recipes={savedRecipes.map((savedReciep) => savedReciep.recipe)}
       onRecipePress={(recipe) => {
         router.push(`/home/recipes/${recipe.id}`);

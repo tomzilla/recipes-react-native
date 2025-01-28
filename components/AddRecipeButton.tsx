@@ -5,13 +5,13 @@ import { Camera, Globe, Type } from 'lucide-react-native';
 import { theme } from '../constants/Colors';
 import { Text } from '@rneui/themed';
 import { useAuth } from '@/hooks/useAuth';
+import { useColors } from '@/hooks/useColors';
 
 
 
 const AddRecipeButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const colorScheme = useColorScheme();
-  const colors = theme[colorScheme ?? 'light'];
+  const colors = useColors();
   const { width: screenWidth } = useWindowDimensions();
   const auth = useAuth();
 
@@ -23,19 +23,19 @@ const AddRecipeButton = () => {
 
   const styles = StyleSheet.create({
     tabButton: {
-      width: 50,
-      height: 50,
-      borderRadius: 30,
+      width: 75,
+      height: 75,
+      borderRadius: 50,
       backgroundColor: colors.brand,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: -30,
-      shadowColor: colors.textPrimary,
+      shadowColor: colors.black,
       shadowOffset: {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.25,
+      shadowOpacity: 0.35,
       shadowRadius: 3.84,
       elevation: 5,
     },
@@ -48,23 +48,22 @@ const AddRecipeButton = () => {
       position: 'absolute',
       width: 20,
       height: 3,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       top: 8.5,
     },
     plusVertical: {
       position: 'absolute',
       width: 3,
       height: 20,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       left: 8.5,
     },
     modalOverlay: {
       flex: 1,
-      backgroundColor: colors.overlay,
       justifyContent: 'flex-end',
     },
     modalContent: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.white,
       padding: 20,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
@@ -77,12 +76,12 @@ const AddRecipeButton = () => {
     option: {
       padding: 15,
       borderRadius: 10,
-      backgroundColor: colors.surfaceAlt,
+      backgroundColor: colors.white,
       width: screenWidth / 4,
       height: screenWidth / 4,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor: colors.textPrimary,
+      shadowColor: colors.black,
       shadowOffset: {
         width: 0,
         height: 1,
@@ -93,7 +92,7 @@ const AddRecipeButton = () => {
       marginBottom: 8, // Space between button and label
     },
     optionLabel: {
-      color: colors.textPrimary,
+      color: colors.black,
       fontSize: 14,
       fontWeight: '500',
       marginTop: 4,
@@ -129,7 +128,7 @@ const AddRecipeButton = () => {
               style={styles.option}
               onPress={() => handleOptionPress('/home/recipes/add_camera')}
             >
-              <Camera size={32} color={colors.textPrimary} />
+              <Camera size={32} color={colors.black} />
               <Text style={styles.optionLabel}>Camera</Text>
 
             </TouchableOpacity>
@@ -138,7 +137,7 @@ const AddRecipeButton = () => {
               style={styles.option}
               onPress={() => handleOptionPress('/home/recipes/add_url')}
             >
-              <Globe size={32} color={colors.textPrimary} />
+              <Globe size={32} color={colors.black} />
               <Text style={styles.optionLabel}>Website</Text>
 
             </TouchableOpacity>
@@ -147,7 +146,7 @@ const AddRecipeButton = () => {
               style={styles.option}
               onPress={() => handleOptionPress('/home/recipes/add_text')}
             >
-              <Type size={32} color={colors.textPrimary} />
+              <Type size={32} color={colors.black} />
               <Text style={styles.optionLabel}>Text</Text>
             </TouchableOpacity>
           </View>

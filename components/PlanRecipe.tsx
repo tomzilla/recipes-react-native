@@ -115,10 +115,6 @@ export default function PlanRecipeComponent({recipe}: PlanRecipeComponentProps) 
 
 const styles = StyleSheet.create({
   floatingButton: {
-    position: 'absolute',
-    bottom: 32, // Adjust this value to position the button vertically
-    right: 32,
-    zIndex: 1,
     borderRadius: 30,
   },
   container: {
